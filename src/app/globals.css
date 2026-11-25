@@ -1,0 +1,238 @@
+@import "tailwindcss";
+
+/* VELORYN design tokens ----------------------------------------------------
+   Emerald dominates. Gold is used sparingly as metal. Mint marks interaction. */
+@theme inline {
+  --color-vel-emerald: #06362b;
+  --color-vel-malachite: #0b4a3a;
+  --color-vel-pine: #082a24;
+  --color-vel-gold: #d4b46a;
+  --color-vel-champagne: #eadfc4;
+  --color-vel-sage: #aac4b5;
+  --color-vel-mint: #64dcc0;
+
+  --font-display: var(--font-unbounded), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+html {
+  background: #06362b;
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-vel-emerald);
+  color: var(--color-vel-champagne);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: #d4b46a;
+  color: #082a24;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-vel-mint);
+  outline-offset: 3px;
+}
+
+section[id] {
+  scroll-margin-top: 4.5rem;
+}
+
+/* Small technical caption ------------------------------------------------- */
+.label {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  line-height: 1.4;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-vel-sage);
+}
+
+.label-gold {
+  color: var(--color-vel-gold);
+}
+
+/* Modular grid backdrop: twelve hairline columns ------------------------- */
+.grid-lines {
+  background-image: linear-gradient(to right, rgba(212, 180, 106, 0.07) 1px, transparent 1px);
+  background-size: calc(100% / 12) 100%;
+  mask-image: linear-gradient(to bottom, transparent, #000 18%, #000 82%, transparent);
+}
+
+/* Buttons ---------------------------------------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  min-height: 3rem;
+  padding: 0 1.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s, transform 0.3s;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background: var(--color-vel-gold);
+  color: var(--color-vel-pine);
+}
+.btn-primary:hover {
+  background: var(--color-vel-champagne);
+}
+
+.btn-ghost {
+  border: 1px solid rgba(234, 223, 196, 0.35);
+  color: var(--color-vel-champagne);
+}
+.btn-ghost:hover {
+  border-color: var(--color-vel-mint);
+  background: rgba(11, 74, 58, 0.7);
+  color: var(--color-vel-mint);
+}
+
+.btn .arrow {
+  display: inline-block;
+  transition: transform 0.3s;
+}
+.btn:hover .arrow {
+  transform: translateX(4px);
+}
+
+/* Scroll reveal ------------------------------------------------------------ */
+.reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition:
+    opacity 1s cubic-bezier(0.2, 0.7, 0.2, 1) var(--d, 0ms),
+    transform 1s cubic-bezier(0.2, 0.7, 0.2, 1) var(--d, 0ms);
+}
+.reveal[data-in="true"] {
+  opacity: 1;
+  transform: none;
+}
+
+/* Hero entrance ------------------------------------------------------------ */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(32px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes flow {
+  to {
+    stroke-dashoffset: -24;
+  }
+}
+@keyframes pulse-ring {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+@keyframes scrollcue {
+  0% {
+    transform: scaleY(0);
+    transform-origin: top;
+  }
+  50% {
+    transform: scaleY(1);
+    transform-origin: top;
+  }
+  51% {
+    transform-origin: bottom;
+  }
+  100% {
+    transform: scaleY(0);
+    transform-origin: bottom;
+  }
+}
+
+.intro-rise {
+  opacity: 0;
+  animation: rise 1.2s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+  animation-delay: var(--d, 0ms);
+}
+.intro-fade {
+  opacity: 0;
+  animation: fade 1.6s ease forwards;
+  animation-delay: var(--d, 0ms);
+}
+
+/* Form fields ------------------------------------------------------------- */
+.field {
+  width: 100%;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid rgba(234, 223, 196, 0.3);
+  padding: 0.75rem 0;
+  color: var(--color-vel-champagne);
+  font-size: 1rem;
+  transition: border-color 0.3s;
+  border-radius: 0;
+}
+.field::placeholder {
+  color: rgba(170, 196, 181, 0.6);
+}
+.field:hover {
+  border-bottom-color: rgba(234, 223, 196, 0.6);
+}
+.field:focus {
+  outline: none;
+  border-bottom-color: var(--color-vel-mint);
+}
+.field[aria-invalid="true"] {
+  border-bottom-color: #e8a17a;
+}
+select.field option {
+  background: #082a24;
+  color: #eadfc4;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal,
+  .intro-rise,
+  .intro-fade {
+    opacity: 1;
+    transform: none;
+    animation: none;
+    transition: none;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
